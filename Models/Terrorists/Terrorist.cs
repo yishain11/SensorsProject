@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SensorsProject.Models.Sensors;
+using SensorsProject.Utils;
 
 namespace SensorsProject.Models.Terrorists
 {
     internal class Terrorist
     {
-        private string _rank;
+        public string _rank;
         public bool isExposed;
-        private SensorObj[] _sensorsWeaknessArr;
-        private Dictionary<string, int> _weaknessSensorsMap { get; set; }
-        private SensorObj[] _attachedSensors;
-        private int _sensorNum;
+        public SensorObj[] _sensorsWeaknessArr;
+        public Dictionary<string, int> _weaknessSensorsMap;
+        public SensorObj[] _attachedSensors;
+        public int _sensorNum;
         public Terrorist(int sensorNum = 2, string rank = "basic")
         {
             this._rank = rank;
@@ -24,25 +22,22 @@ namespace SensorsProject.Models.Terrorists
             this._attachedSensors = new SensorObj[this._sensorNum];
         }
 
-
         public Dictionary<string, int> genWeaknessSensorMap(SensorObj[] sensorList = null)
         {
-            Console.WriteLine("start genWeaknessSensorMap");
             if (sensorList == null) {
                 sensorList = this._sensorsWeaknessArr;
             }
-            Console.WriteLine($"sensor list len: {sensorList.Length}");
-            Console.WriteLine($"sensor 0 {sensorList[0].ToString()}");
-            Console.WriteLine($"sensor 1 {sensorList[1].ToString()}");
             Dictionary<string, int> sensorHistogram = new Dictionary<string, int>();
             foreach (SensorObj s in sensorList)
             {
-                //Console.WriteLine($"s is: {Utils.UtilMethods.DescribeObject(s)}");
-                if (!sensorHistogram.ContainsKey(s.type))
+                if(s!= null)
                 {
-                    sensorHistogram[s.type] = 0;
+                    if (!sensorHistogram.ContainsKey(s.type))
+                    {
+                        sensorHistogram[s.type] = 0;
+                    }
+                    sensorHistogram[s.type] += 1;
                 }
-                sensorHistogram[s.type] += 1;
             }
             return sensorHistogram;
         }
@@ -60,10 +55,14 @@ namespace SensorsProject.Models.Terrorists
             }
         }
 
-        public void attachSensor(SensorObj sensor, int sensorLocation)
+        public bool attachSensor(SensorObj sensor, int sensorLocation)
         {
-            this._attachedSensors[sensorLocation] = sensor;
-            Console.WriteLine(this.checkWeaknessMatching());
+            if (sensorLocation < this._attachedSensors.Length)
+            {
+                this._attachedSensors[sensorLocation] = sensor;
+            }
+            this.isExposed = this.checkWeaknessMatching();
+            return this.isExposed;
         }
 
         public int getSensorListLen()
@@ -71,9 +70,9 @@ namespace SensorsProject.Models.Terrorists
             return this._sensorNum;
         }
 
-        public string checkWeaknessMatching()
+        public bool checkWeaknessMatching()
         {
-            Console.WriteLine("checkWeaknessMatching start");
+            bool isTerroristExposed = false;
             int totalSensors = this._sensorNum;
             int currentMatches = 0;
             Dictionary<string, int> attachedWeaknessMap = this.genWeaknessSensorMap(this._attachedSensors);
@@ -90,12 +89,14 @@ namespace SensorsProject.Models.Terrorists
                     }
                 }
             }
+            Console.WriteLine($"{currentMatches}/{totalSensors} matched");
             if (currentMatches == totalSensors) {
                 this.isExposed = true;
                 Console.WriteLine("Terrorist exposed!");
+                isTerroristExposed = true;
             }
-            Console.WriteLine("checkWeaknessMatching end");
-            return $"{currentMatches}/{totalSensors} matched";
+            return isTerroristExposed;
+            
         }
     }
 }
