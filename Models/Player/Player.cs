@@ -2,17 +2,21 @@
 using SensorsProject.Models.Terrorists;
 using System;
 
-namespace SensorsProject.Models.Player
+namespace SensorsProject.Models.Players
 {
     internal static class Player
     {
         public static void AttachSensor(Terrorist t) {
+            Console.WriteLine("[Player] AttachSensor - Start");
+
             int sensorLocation = SelectSensorLocation(t);
             SensorObj selectedSensor = SelectSensorToAttach();
             if (selectedSensor != null)
             {
+                Console.WriteLine($"[Player] selectedSensor - attached {selectedSensor.type}");
                 t.attachSensor(selectedSensor, sensorLocation);
             }
+            Console.WriteLine("[Player] AttachSensor - end");
 
         }
 

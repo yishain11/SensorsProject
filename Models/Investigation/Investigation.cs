@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SensorsProject.Models.Player;
+using SensorsProject.Models.Players;
 using SensorsProject.Models.Terrorists;
 
 namespace SensorsProject.Models.Investigations
@@ -19,7 +19,7 @@ namespace SensorsProject.Models.Investigations
         public void startInvestigation() {
             while (!terrorist.isExposed)
             {
-                Player.Player.AttachSensor(this.terrorist);
+                Player.AttachSensor(this.terrorist);
             }
         }
     }

@@ -60,9 +60,9 @@ namespace SensorsProject.Models.Sensors
         public static SensorObj[] GenRandSensors(int num)
         {
             SensorObj[] sensorsList = new SensorObj[num];
-            SensorObj newSensor = genRandSensorSingle();
             while (num > 0)
             {
+                SensorObj newSensor = genRandSensorSingle();
                 while(newSensor == null)
                 {
                     newSensor = genRandSensorSingle();

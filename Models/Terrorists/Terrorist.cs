@@ -24,22 +24,20 @@ namespace SensorsProject.Models.Terrorists
             this._attachedSensors = new SensorObj[this._sensorNum];
         }
 
-        public static string DescribeObject<T>(T obj)
-        {
-            var props = typeof(T).GetProperties();
-            var details = props.Select(p => $"{p.Name}={p.GetValue(obj)}");
-            return $"{typeof(T).Name}: " + string.Join(", ", details);
-        }
 
         public Dictionary<string, int> genWeaknessSensorMap(SensorObj[] sensorList = null)
         {
+            Console.WriteLine("start genWeaknessSensorMap");
             if (sensorList == null) {
                 sensorList = this._sensorsWeaknessArr;
             }
+            Console.WriteLine($"sensor list len: {sensorList.Length}");
+            Console.WriteLine($"sensor 0 {sensorList[0].ToString()}");
+            Console.WriteLine($"sensor 1 {sensorList[1].ToString()}");
             Dictionary<string, int> sensorHistogram = new Dictionary<string, int>();
             foreach (SensorObj s in sensorList)
             {
-                Console.WriteLine($"s is: {s}");
+                //Console.WriteLine($"s is: {Utils.UtilMethods.DescribeObject(s)}");
                 if (!sensorHistogram.ContainsKey(s.type))
                 {
                     sensorHistogram[s.type] = 0;
@@ -51,7 +49,7 @@ namespace SensorsProject.Models.Terrorists
 
         public SensorObj[] setSensorList()
         {
-            return this._sensorsWeaknessArr = SensorManager.GenRandSensors(this._sensorNum);
+            return SensorManager.GenRandSensors(this._sensorNum);
         }
 
         public void showSensorsWeakness()
@@ -75,6 +73,7 @@ namespace SensorsProject.Models.Terrorists
 
         public string checkWeaknessMatching()
         {
+            Console.WriteLine("checkWeaknessMatching start");
             int totalSensors = this._sensorNum;
             int currentMatches = 0;
             Dictionary<string, int> attachedWeaknessMap = this.genWeaknessSensorMap(this._attachedSensors);
@@ -95,6 +94,7 @@ namespace SensorsProject.Models.Terrorists
                 this.isExposed = true;
                 Console.WriteLine("Terrorist exposed!");
             }
+            Console.WriteLine("checkWeaknessMatching end");
             return $"{currentMatches}/{totalSensors} matched";
         }
     }
