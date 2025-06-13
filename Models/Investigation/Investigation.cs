@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SensorsProject.Models.Player;
 using SensorsProject.Models.Terrorists;
 
-namespace SensorsProject.Models.Investigation
+namespace SensorsProject.Models.Investigations
 {
     internal class Investigation
     {
         Terrorist terrorist;
-        bool isExposed = false;
         bool playerTurn = true;
         public Investigation(Terrorist t) {
             this.terrorist = t;
         }
 
         public void startInvestigation() {
-            while (!this.isExposed)
+            while (!terrorist.isExposed)
             {
-                   
+                Player.Player.AttachSensor(this.terrorist);
             }
         }
     }

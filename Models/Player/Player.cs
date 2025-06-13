@@ -1,10 +1,6 @@
 ﻿using SensorsProject.Models.Sensors;
 using SensorsProject.Models.Terrorists;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SensorsProject.Models.Player
 {
@@ -13,6 +9,10 @@ namespace SensorsProject.Models.Player
         public static void AttachSensor(Terrorist t) {
             int sensorLocation = SelectSensorLocation(t);
             SensorObj selectedSensor = SelectSensorToAttach();
+            if (selectedSensor != null)
+            {
+                t.attachSensor(selectedSensor, sensorLocation);
+            }
 
         }
 

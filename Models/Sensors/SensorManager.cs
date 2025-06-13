@@ -49,16 +49,26 @@ namespace SensorsProject.Models.Sensors
             return newSensor;
 
         }
+
+        public static SensorObj genRandSensorSingle() {
+            Random rand = new Random();
+            int randNum = rand.Next(sensorTypes.Length);
+            string sensorType = sensorTypes[randNum];
+            SensorObj newSensor = getSpecificSensor(sensorType);
+            return newSensor;
+        }
         public static SensorObj[] GenRandSensors(int num)
         {
             SensorObj[] sensorsList = new SensorObj[num];
-            Random rand = new Random();
+            SensorObj newSensor = genRandSensorSingle();
             while (num > 0)
             {
-                int randNum = rand.Next(sensorTypes.Length);
-                string sensorType = sensorTypes[randNum];
-                SensorObj newSensor = getSpecificSensor(sensorType);
-                sensorsList.Append(newSensor);
+                while(newSensor == null)
+                {
+                    newSensor = genRandSensorSingle();
+
+                }
+                sensorsList[num-1]= newSensor;
                 num -= 1;
             }
             return sensorsList;

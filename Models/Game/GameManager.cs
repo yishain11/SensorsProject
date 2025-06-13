@@ -1,4 +1,5 @@
 ﻿using SensorsProject.Models.Terrorists;
+using SensorsProject.Models.Investigations;
 
 namespace SensorsProject.Models.Game
 {
@@ -10,7 +11,8 @@ namespace SensorsProject.Models.Game
         
         public GameManager()
         {
-            this.basicTerrorist.showSensors();
+            Investigation i = new Investigation(basicTerrorist);
+            i.startInvestigation();
         }
 
     }
