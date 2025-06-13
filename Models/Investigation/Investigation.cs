@@ -19,7 +19,7 @@ namespace SensorsProject.Models.Investigation
         public void startInvestigation() {
             while (!this.isExposed)
             {
-                
+                   
             }
         }
     }

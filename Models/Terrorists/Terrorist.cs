@@ -10,24 +10,33 @@ namespace SensorsProject.Models.Terrorists
     internal class Terrorist
     {
         private string _rank;
-        private List<SensorObj> _sensors;
+        private SensorObj[] _sensorsWeakness;
+        private SensorObj[] _attachedSensors;
         private int _sensorNum;
         public Terrorist(int sensorNum = 2, string rank = "basic")
         {
             this._rank = rank;
             this._sensorNum = sensorNum;
             this.setSensorList();
+            this._attachedSensors = new SensorObj[this._sensorNum];
         }
 
         public void setSensorList() {
-            this._sensors = SensorGenerator.GenSensors(this._sensorNum);
+            this._sensorsWeakness = SensorManager.GenRandSensors(this._sensorNum);
         }
 
-        public void showSensors() { 
-            foreach (SensorObj sensor in this._sensors)
+        public void showSensorsWeakness() { 
+            foreach (SensorObj sensor in this._sensorsWeakness)
             {
-                Console.WriteLine($"I have sensor type: {sensor.type}");
+                Console.WriteLine($"I am week to sensor type: {sensor.type}");
             }
         }
+
+        public void attachSensor(SensorObj sensor) { }
+
+        public int getSensorListLen() {
+            return this._sensors.Count;
+        }
+
     }
 }
