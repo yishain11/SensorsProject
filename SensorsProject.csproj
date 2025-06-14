@@ -43,12 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Factories\FactoryInterface.cs" />
+    <Compile Include="Models\Factories\SensorFactory.cs" />
+    <Compile Include="Models\Factories\TerroristFactory.cs" />
     <Compile Include="Models\Game\GameManager.cs" />
     <Compile Include="Models\Investigation\Investigation.cs" />
     <Compile Include="Models\Player\Player.cs" />
     <Compile Include="Models\Sensors\Sensor.cs" />
     <Compile Include="Models\Sensors\SensorManager.cs" />
+    <Compile Include="Models\Sensors\SensorsInterfaces.cs" />
     <Compile Include="Models\Terrorists\Terrorist.cs" />
+    <Compile Include="Models\Terrorists\TerroristInterfaces.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\UtilMethods.cs" />

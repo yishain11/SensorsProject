@@ -9,10 +9,11 @@ namespace SensorsProject.Models.Terrorists
     {
         public string _rank;
         public bool isExposed;
-        public SensorObj[] _sensorsWeaknessArr;
-        public Dictionary<string, int> _weaknessSensorsMap;
-        public SensorObj[] _attachedSensors;
-        public int _sensorNum;
+        private SensorObj[] _sensorsWeaknessArr;
+        private Dictionary<string, int> _weaknessSensorsMap;
+        private SensorObj[] _attachedSensors;
+        private int _sensorNum;
+        private int _numOfMatches;
         public Terrorist(int sensorNum = 2, string rank = "basic")
         {
             this._rank = rank;
@@ -20,6 +21,7 @@ namespace SensorsProject.Models.Terrorists
             this._sensorsWeaknessArr = this.setSensorList();
             this._weaknessSensorsMap = this.genWeaknessSensorMap();
             this._attachedSensors = new SensorObj[this._sensorNum];
+            this._numOfMatches = 0;
         }
 
         public Dictionary<string, int> genWeaknessSensorMap(SensorObj[] sensorList = null)
@@ -72,6 +74,8 @@ namespace SensorsProject.Models.Terrorists
 
         public bool checkWeaknessMatching()
         {
+            this._numOfMatches = 0;
+            // move checking logic into the sensor active method
             bool isTerroristExposed = false;
             int totalSensors = this._sensorNum;
             int currentMatches = 0;
@@ -92,6 +96,10 @@ namespace SensorsProject.Models.Terrorists
             Console.WriteLine($"{currentMatches}/{totalSensors} matched");
             if (currentMatches == totalSensors) {
                 this.isExposed = true;
+                foreach (SensorObj s in this._attachedSensors)
+                {
+                    s.Activate();
+                }
                 Console.WriteLine("Terrorist exposed!");
                 isTerroristExposed = true;
             }
